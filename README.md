@@ -33,6 +33,9 @@ A estrutura de uso segue o formato:
 
 - **Java**: Validar e compilar um projeto Maven.
   `ai java finish-task`
+- **Java (Parsers)**: Extrair contexto enxuto de relatórios (JaCoCo e PITest).
+  `ai java summary jacoco`
+  `ai java summary pitest`
 - **Python**: Rodar validações em um projeto Python.
   `ai python finish-task`
 - **Ambiente**: Checar o diretório atual e status do Git.
