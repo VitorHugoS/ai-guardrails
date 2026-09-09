@@ -47,8 +47,8 @@ try:
                         reason.append(f"Branch parcialmente testado: mb={mb}")
                     if mi > 0:
                         reason.append(f"Linha não executada: mi={mi}")
-                    
-                    print(f"[JACOCO FAIL] {filename}: Line {ln} ({str.join(\", \", reason)})")
+                    reasons = ", ".join(reason)
+                    print(f"[JACOCO FAIL] {filename}: Line {ln} ({reasons})")
                     fail_count += 1
                     
     if fail_count == 0:
