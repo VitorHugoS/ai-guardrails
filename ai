@@ -1,0 +1,51 @@
+#!/bin/bash
+
+# Diretório base do script ai
+AI_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+MODULES_DIR="$AI_ROOT/modules"
+
+# Função para mostrar o menu de ajuda
+show_help() {
+    echo "======================================================"
+    echo "🤖 AI Guardrails CLI"
+    echo "======================================================"
+    echo "Uso: ai <modulo> <comando> [argumentos]"
+    echo ""
+    echo "Módulos disponíveis:"
+    
+    # Lista os módulos (pastas) disponíveis
+    for d in "$MODULES_DIR"/*/; do
+        if [ -d "$d" ]; then
+            module_name=$(basename "$d")
+            echo "  - $module_name"
+        fi
+    done
+    echo ""
+    echo "Exemplos:"
+    echo "  ai java finish-task"
+    echo "  ai python finish-task"
+    echo "  ai common check-cd"
+    echo "======================================================"
+}
+
+# Verifica se os argumentos foram passados
+if [ $# -lt 2 ]; then
+    show_help
+    exit 1
+fi
+
+MODULE=$1
+COMMAND=$2
+shift 2 # Remove módulo e comando, mantendo o resto como argumentos adicionais
+
+# Verifica se o script do comando existe no módulo
+COMMAND_SCRIPT="$MODULES_DIR/$MODULE/$COMMAND.sh"
+
+if [ ! -f "$COMMAND_SCRIPT" ]; then
+    echo "❌ Erro: Comando '$COMMAND' não encontrado no módulo '$MODULE'."
+    echo "Caminho procurado: $COMMAND_SCRIPT"
+    exit 1
+fi
+
+# Executa o script correspondente
+bash "$COMMAND_SCRIPT" "$@"
